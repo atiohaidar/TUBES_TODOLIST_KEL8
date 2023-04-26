@@ -1,0 +1,48 @@
+KategoriController
+
+shoAllTodo
+{
+    "kategori" : [
+        {
+            "id": "1",
+            "nama": "nama1",
+
+        },{
+            "id": "2",
+            "nama": "nama2",
+            
+        }
+
+
+    ]
+}
+tambah
+{
+    "nama" : "halo"
+}
+
+
+TodoController
+showAllTodoByKategori
+{
+    "kategori": {
+        "id": "1",
+        "judul": "judul1"
+    }
+
+    "todo": [
+        {
+
+        "id": "1",
+        "nama": "nama1",
+        "kategori_id": "1",
+        },
+        {
+
+            "id": "2",
+            "nama": "nama2",
+            "kategori_id": "1",
+            }
+
+    ]
+}
