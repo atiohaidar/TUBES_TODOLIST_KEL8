@@ -5,5 +5,5 @@ import org.springframework.data.repository.CrudRepository;
 import com.kuliah.models.entities.TodoEntity;
 
 public interface TodoRepo extends CrudRepository<TodoEntity, Integer>{
-    Iterable<TodoEntity>  findByKategoriId(Integer id);
+    Iterable<TodoEntity>  findAllByKategoriId(Integer id);
 }

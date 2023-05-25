@@ -15,8 +15,9 @@ public class TodoService {
     @Autowired
     private TodoRepo todoRepo;
 
-    public Iterable<TodoEntity> findAllByKategori(Integer kategori_id){
-        return todoRepo.findByKategoriId(kategori_id);
+    public Iterable<TodoEntity> findAllByKategoriId(Integer kategori_id){
+        
+        return todoRepo.findAllByKategoriId(kategori_id);
     }
     public TodoEntity findOne(Integer id){
         Optional<TodoEntity> temp = todoRepo.findById(id);

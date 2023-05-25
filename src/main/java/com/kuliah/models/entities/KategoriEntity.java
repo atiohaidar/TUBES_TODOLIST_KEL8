@@ -12,11 +12,12 @@ import jakarta.persistence.Table;
 @Table(name = "kategori")
 public class KategoriEntity implements Serializable{
     private static final long serialVersionUID = 1L; // klo impement serializable, disarankan ada ini
-    public KategoriEntity() {
-    }
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
+    
+    public KategoriEntity() {
+    }
     public KategoriEntity(int id, String nama) {
         this.id = id;
         this.nama = nama;
