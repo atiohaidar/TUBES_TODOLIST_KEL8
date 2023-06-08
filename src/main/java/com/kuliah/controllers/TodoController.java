@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.validation.Errors;
 import org.springframework.validation.ObjectError;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -22,7 +23,7 @@ import com.kuliah.models.entities.TodoEntity;
 import com.kuliah.services.KategoriService;
 import com.kuliah.services.TodoService;
 
-@RestController
+@Controller
 @RequestMapping("/{id_kategori}")
 public class TodoController {
         @Autowired
@@ -32,7 +33,7 @@ public class TodoController {
 
     KategoriService kategoriService;
     @GetMapping
-    public ResponseEntity<ResponseData<ArrayList<TodoData>>>  showAllTodoByKategori(@PathVariable("id_kategori") Integer id_kategori){
+    public String  showAllTodoByKategori(@PathVariable("id_kategori") Integer id_kategori, Model model){
         ResponseData<ArrayList<TodoData>> responseData = new ResponseData<>();
         Iterable<TodoEntity> all_Todo = todoService.findAllByKategoriId(id_kategori);
         ArrayList<TodoData> all_todoData = new ArrayList<>();
@@ -41,14 +42,19 @@ public class TodoController {
         }
         responseData.setStatus(true);
         responseData.setPayload(all_todoData);
+        model.addAttribute("all_todoData", all_todoData);
+        model.addAttribute("kategori", kategoriService.findOne(id_kategori));
         
-    return ResponseEntity.ok(responseData);
+        
+    return "Kategori/Todo/lihatTodo.html";
     }
 
     @GetMapping("/edit/{id}")
-    public String editTodo(@PathVariable("id") Integer id){
+    public String editTodo(@PathVariable("id") Integer id,Model model){
         TodoEntity todo = todoService.findOne(id);
         todo.getKategori().getId();
+        model.addAttribute("todo", todo);
+
 
         return "/Kategori/Todo/editTodo";
     }
@@ -81,7 +87,7 @@ public class TodoController {
     }
     
     @GetMapping("/delete/{id}")
-    public ResponseEntity<ResponseData<String>> deleteTodoPost(@PathVariable("id") Integer id){
+    public String deleteTodoPost(@PathVariable("id") Integer id, @PathVariable("id_kategori") Integer id_kategori){
         
         ResponseData<String> responseData = new ResponseData<>();
         // if (errors.hasErrors()){
@@ -97,12 +103,13 @@ public class TodoController {
         responseData.setStatus(true);
         todoService.removeBy(id);
         responseData.setPayload("berhasil");
-        return ResponseEntity.ok(responseData);
+        return "redirect:/" + id_kategori.toString(); 
 
 
     }
     @GetMapping("/add")
-    public String createTodoGet(@PathVariable("id_kategori") Integer id_kategori){
+    public String createTodoGet(@PathVariable("id_kategori") Integer id_kategori, Model model){
+        model.addAttribute("id_kategori", id_kategori);
         return "/Kategori/Todo/tambahTodo";
     }
     @PostMapping("/add")

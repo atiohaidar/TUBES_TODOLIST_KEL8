@@ -11,24 +11,23 @@
     <div class="container">
           
     <h1>Aplikasi Todo List</h1>    
-    <h3>Todo (variabel kategori)</h3>
+    <h3 th:text='${kategori.getNama()}'>Todo (variabel kategori)</h3>
     
       <!-- tambah akun -->
-    <a name="" id="" class="btn btn-primary" href="/2/add" role="button">Tambah</a>
+    <a name="" id="" class="btn btn-primary" th:href="@{'/'+${kategori.getId()}+'/add'}" role="button">Tambah</a>
      <div class="container" style="background-color: aqua;">
      
       </div>
       <!-- list todo nya -->
-      <div class="row" >
+      <div class="row" th:each="todo :${all_todoData} ">
         <div class="col-10      " style="background-color: blueviolet;">
-          <p>ini sebuah title dari todo</p>
+          <p th:text = "${todo.getNama()}"></p>
         </div>
         
         <div class="col-2 " style="background-color: aquamarine;">
-          <a name="" id="" class="btn btn-primary" href="/2/edit/0" role="button">Edit</a>
-          <button type="button" class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#staticBackdrop">
-            Hapus
-          </button>
+          <a name="" id="" class="btn btn-primary"  th:href="@{'/'+${kategori.getId()}+'/edit/'+${todo.getId()}}" role="button">Edit</a>
+          <a name="" id="" class="btn btn-danger"  th:href="@{'/'+${kategori.getId()}+'/delete/'+${todo.getId()}}" role="button">hapus</a>
+          
         </div>
       </div>
       

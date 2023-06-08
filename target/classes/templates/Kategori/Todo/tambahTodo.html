@@ -21,7 +21,9 @@
                   <textarea type="text" class="form-control" id="inputTambahTodo" placeholder="contoh: Pisang 2kg"> </textarea>
                 </div>
                 <div class="col-auto">
-                  <button type="submit" class="btn btn-primary mb-3">Tambah</button>
+                  <button type="submit" class="btn btn-primary">Tambah</button>
+                  <a th:href="@{'/'+${id_kategori}}" class="btn btn-danger">Batal</a>
+
                 </div>
               </form>
             </div>

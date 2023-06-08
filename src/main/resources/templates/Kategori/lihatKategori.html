@@ -9,7 +9,6 @@
   </head>
   <body>
     <div class="container">
-          lagi
     <h1>Aplikasi Todo List</h1>    
     <h3>Kategori</h3>
     
@@ -23,14 +22,16 @@
      
       
      </div>
-      <div class="row" >
+
+
+      <div class="row" th:each="kategori :${all_kategori} ">
         <div class="col-10      " style="background-color: blueviolet;">
-          <a  href="/2/" role="alert">Title</p></a>
+          <a  th:href="@{'/'+${kategori.getId()}}" role="alert" th:text = '${kategori.getNama()}'>Title</p></a>
         </div>
         
         <div class="col-2 " style="background-color: aquamarine;">
-          <a name="" id="" class="btn btn-primary" href="/edit/2" role="button">Edit</a>
-          <a name="" id="" class="btn btn-danger" href="/delete/2" role="button">Hapus</a>
+          <a name="" id="" class="btn btn-primary" th:href="@{'/edit/'+${kategori.getId()}}" role="button">Edit</a>
+          <a name="" id="" class="btn btn-danger" th:href="@{'/delete/'+${kategori.getId()}}" role="button">Hapus</a>
         </div>
       </div>
       
