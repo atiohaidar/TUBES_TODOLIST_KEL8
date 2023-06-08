@@ -26,8 +26,9 @@ import com.kuliah.services.TodoService;
 @Controller
 @RequestMapping("/{id_kategori}")
 public class TodoController {
-        @Autowired
-
+    public Integer id_kategori;
+    @Autowired
+    
     TodoService todoService;
     @Autowired
 
@@ -50,38 +51,26 @@ public class TodoController {
     }
 
     @GetMapping("/edit/{id}")
-    public String editTodo(@PathVariable("id") Integer id,Model model){
+    public String editTodo(@PathVariable("id") Integer id,Model model, @PathVariable("id_kategori") Integer id_kategori){
         TodoEntity todo = todoService.findOne(id);
         todo.getKategori().getId();
         model.addAttribute("todo", todo);
 
+        this.id_kategori = id_kategori;
 
         return "/Kategori/Todo/editTodo";
     }
-    @PostMapping("/edit/{id}")
-    public ResponseEntity<ResponseData<TodoData>> editTodoPost(@PathVariable("id_kategori") Integer id_kategori, @PathVariable("id") Integer id , @RequestBody TodoData edited_todo, Errors errors){
-        ResponseData<TodoData> responseData = new ResponseData<>();
-        if (errors.hasErrors()){
-            for (ObjectError error: errors.getAllErrors()){
-                responseData.getMessage().add(error.getDefaultMessage());
-            }
-            responseData.setStatus(false);
-            responseData.setPayload(null);
-            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(responseData);
-        }
-        TodoEntity todoEntity = new TodoEntity();
-        
-        todoEntity.setNama(edited_todo.getNama());
-        todoEntity.setKategori(kategoriService.findOne(id_kategori));
-        todoEntity.setId(id);
-        todoEntity = todoService.save(todoEntity);
+    @PostMapping("/edit")
+    public String editTodoPost(TodoEntity edited_todo){
+        System.out.println(edited_todo.getId());
+       
+      todoService.save(edited_todo);
 
-        responseData.setStatus(true);
-        responseData.setPayload(new TodoData(todoEntity.getId(), todoEntity.getNama(), id_kategori));
+        
 
         
         
-        return ResponseEntity.ok(responseData);
+      return "redirect:/" + id_kategori.toString(); 
 
         
     }
@@ -110,31 +99,25 @@ public class TodoController {
     @GetMapping("/add")
     public String createTodoGet(@PathVariable("id_kategori") Integer id_kategori, Model model){
         model.addAttribute("id_kategori", id_kategori);
+        model.addAttribute("new_todo", new TodoData());
+        this.id_kategori = id_kategori;
         return "/Kategori/Todo/tambahTodo";
     }
     @PostMapping("/add")
-    public  ResponseEntity<ResponseData<TodoData>> createTodoPost(@PathVariable("id_kategori") Integer id_kategori, @RequestBody TodoData new_Todo, Errors errors){
-        ResponseData<TodoData> responseData = new ResponseData<>();
-        if (errors.hasErrors()){
-            for (ObjectError error: errors.getAllErrors()){
-                responseData.getMessage().add(error.getDefaultMessage());
-            }
-            responseData.setStatus(false);
-            responseData.setPayload(null);
-            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(responseData);
-        }
+    public  String createTodoPost( TodoData new_Todo){
+       
         TodoEntity todoEntity = new TodoEntity();
         
         todoEntity.setNama(new_Todo.getNama());
-        todoEntity.setKategori(kategoriService.findOne(id_kategori));
+        todoEntity.setKategori(kategoriService.findOne(this.id_kategori));
         todoEntity = todoService.save(todoEntity);
 
-        responseData.setStatus(true);
-        responseData.setPayload(new TodoData(todoEntity.getId(), todoEntity.getNama(), id_kategori));
+        
+        
 
         
         
-        return ResponseEntity.ok(responseData);
+        return "redirect:/" + this.id_kategori.toString();
         
        
     }

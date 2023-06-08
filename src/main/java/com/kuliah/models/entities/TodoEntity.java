@@ -19,16 +19,16 @@ public class TodoEntity implements Serializable{
     }
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int id;
+    public int id;
     public TodoEntity(int id, String nama) {
         this.id = id;
         this.nama = nama;
     }
-    private String nama;
+    public String nama;
 
     @ManyToOne
     @JoinColumn(name="kategori_id", referencedColumnName = "id" )
-    private KategoriEntity kategori;
+    public KategoriEntity kategori;
     public KategoriEntity getKategori() {
         return kategori;
     }

@@ -16,9 +16,12 @@
             <div class="card-body">
               <h5 class="card-title">Edit Todo</h5>
               <p class="card-text">Silahkan edit Todo yans sudah ada</p>
-              <form class="row g-3">
+              <form class="row g-3" th:object="${todo}" method="post" th:action="@{'/'+id_kategori + '/edit' }">
                 <div class="col-8">
-                  <input type="text" class="form-control" id="inputEditTodo"  th:value="${todo.getNama()}">
+                  <input type="text" class="form-control" id="inputEditTodo"  th:field="*{nama}">
+                  <input type="hidden"  class="form-control" id="inputEditTodo"  th:field="*{kategori}">
+                  <input type="hidden" class="form-control" id="inputEditTodo"  th:field="*{id}">
+                  
 
                 </div>
                 <div class="col-4">

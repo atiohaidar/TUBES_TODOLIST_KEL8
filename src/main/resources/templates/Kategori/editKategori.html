@@ -16,9 +16,14 @@
             <div class="card-body">
               <h5 class="card-title">Edit Kategori</h5>
               <p class="card-text">Silahkan edit Kategori yans sudah ada</p>
-              <form class="row g-3">
+              <form class="row g-3" th:object="${kategori}" method="post" th:action="@{${'/edit/'+kategori.getId()}}">
+                
+
+
                 <div class="col-8">
-                  <input type="text" class="form-control" id="inputEditKategori" th:value="${kategori.getNama()}" >
+                  <input type="hidden" class="form-control" id="inputEditKategori" th:field="*{id}" >
+                  <input type="text" class="form-control" id="inputEditKategori" th:field="*{nama}" >
+
                 </div>
                 <div class="col-4">
                   <button type="submit" class="btn btn-primary">Edit</button>

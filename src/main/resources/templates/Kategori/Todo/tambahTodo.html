@@ -14,11 +14,13 @@
             <div class="card-body">
               <h5 class="card-title">Tambah Todo</h5>
               <p class="card-text">Silahkan tambah Todo baru</p>
-              <form class="row g-3">
+              <form class="row g-3" th:object="${new_todo}" method="post" th:action="@{'/'+id_kategori + '/add' }">
+
               
                 <div class="col-auto">
                   <label for="inputTambahTodo" class="visually-hidden">Todo</label>
-                  <textarea type="text" class="form-control" id="inputTambahTodo" placeholder="contoh: Pisang 2kg"> </textarea>
+                  <input type="text" class="form-control" id="inputTambahTodo" th:field = "*{nama}" placeholder="Contoh: Tugas">
+
                 </div>
                 <div class="col-auto">
                   <button type="submit" class="btn btn-primary">Tambah</button>

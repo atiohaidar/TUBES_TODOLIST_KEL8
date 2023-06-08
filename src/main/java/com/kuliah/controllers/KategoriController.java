@@ -48,31 +48,25 @@ return "Kategori/lihatKategori.html";
 
     @GetMapping("/edit/{id}")
     public String editKategori(@PathVariable("id") Integer id, Model model){
+        
         KategoriEntity kategori = kategoriService.findOne(id);
+        KategoriData kategoriData = new KategoriData();
+        kategoriData.setNama(kategori.getNama());
+        kategoriData.setId(kategori.getId());
         model.addAttribute("kategori", kategori);
         return "Kategori/editKategori.html";
 
     }
     @PostMapping("/edit/{id}")
-    public ResponseEntity<ResponseData<KategoriEntity>> editKategoriPost(@PathVariable("id") Integer id,@RequestBody KategoriData kategoriData, Errors errors){
-        ResponseData<KategoriEntity> responseData = new ResponseData<>();
-        if (errors.hasErrors()){
-            for (ObjectError error: errors.getAllErrors()){
-                responseData.getMessage().add(error.getDefaultMessage());
-            }
-            responseData.setStatus(false);
-            responseData.setPayload(null);
-            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(responseData);
-        }
-        KategoriEntity kategoriEntity = new KategoriEntity();
-        kategoriEntity.setNama(kategoriData.getNama());
-        kategoriEntity.setId(id);
-        responseData.setStatus(true);
-        responseData.setPayload(kategoriService.save(kategoriEntity));
+    public String editKategoriPost(KategoriEntity kategoriEntity){
+        // KategoriEntity kategoriEntity = new KategoriEntity(, kategoriData.getNama());
+        System.out.println(kategoriEntity.getId());
+        System.out.println("minta perhatian");
+        kategoriService.save(kategoriEntity);
 
-        ;
+        return "redirect:/";
+
         
-        return ResponseEntity.ok(responseData);
         
     }
     @GetMapping("/delete/{id}")
@@ -83,40 +77,30 @@ return "Kategori/lihatKategori.html";
     
     }
     @PostMapping("/delete/{id}")
-    public ResponseEntity<ResponseData<String>> deleteKategoriPost(/*@RequestBody boolean hapus,*/ @PathVariable("id") Integer id){
-        ResponseData<String> responseData = new ResponseData<>();
+    public String deleteKategoriPost( @PathVariable("id") Integer id){
 
         kategoriService.removeBy(id);
-        responseData.setStatus(true);
-        responseData.setPayload("berhasil");
+        
 
             
-        return ResponseEntity.ok(responseData);
+        return "redirect:/";
     }
     @GetMapping("/add")
-    public String createKategoriGet(){
+    public String createKategoriGet(Model model){
+        model.addAttribute("new_kategori", new KategoriData());
         return "Kategori/tambahKategori.html";
     }
     @PostMapping("/add")
-    public ResponseEntity<ResponseData<KategoriEntity>> createKategoriPost(@RequestBody KategoriData kategoriData, Errors errors){
+    public String createKategoriPost(KategoriData kategoriData){
         System.out.print("Berhasil?");
-        ResponseData<KategoriEntity> responseData = new ResponseData<>();
-        if (errors.hasErrors()){
-            for (ObjectError error: errors.getAllErrors()){
-                responseData.getMessage().add(error.getDefaultMessage());
-            }
-            responseData.setStatus(false);
-            responseData.setPayload(null);
-            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(responseData);
-        }
+        
         KategoriEntity kategoriEntity = new KategoriEntity();
         kategoriEntity.setNama(kategoriData.getNama());
-        responseData.setStatus(true);
-        responseData.setPayload(kategoriService.save(kategoriEntity));
-
+        
+        kategoriService.save(kategoriEntity);
         
         
-        return ResponseEntity.ok(responseData);
+        return "redirect:/";
     }
 
 

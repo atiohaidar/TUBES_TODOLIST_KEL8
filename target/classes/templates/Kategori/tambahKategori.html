@@ -14,9 +14,9 @@
             <div class="card-body">
               <h5 class="card-title">Tambah Kategori</h5>
               <p class="card-text">Silahkan tambah kategori baru</p>
-              <form class="row g-3">
+              <form class="row g-3" th:object="${new_kategori}" method="post" th:action="@{/add}">
                 <div class="col-8">
-                  <input type="text" class="form-control" id="inputTambahKategori" placeholder="Contoh: Tugas">
+                  <input type="text" class="form-control" id="inputTambahKategori" th:field = "*{nama}" placeholder="Contoh: Tugas">
                 </div>
                 <div class="col-4">
                   <button type="submit" class="btn btn-primary">Tambah</button>
