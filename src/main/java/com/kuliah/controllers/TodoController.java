@@ -47,7 +47,7 @@ public class TodoController {
         model.addAttribute("kategori", kategoriService.findOne(id_kategori));
         
         
-    return "Kategori/Todo/lihatTodo.html";
+    return !AuthController.is_login ? "redirect:/login":  "Kategori/Todo/lihatTodo.html";
     }
 
     @GetMapping("/edit/{id}")
@@ -58,7 +58,7 @@ public class TodoController {
 
         this.id_kategori = id_kategori;
 
-        return "/Kategori/Todo/editTodo";
+        return !AuthController.is_login ? "redirect:/login":  "/Kategori/Todo/editTodo";
     }
     @PostMapping("/edit")
     public String editTodoPost(TodoEntity edited_todo){
@@ -70,7 +70,7 @@ public class TodoController {
 
         
         
-      return "redirect:/" + id_kategori.toString(); 
+      return !AuthController.is_login ? "redirect:/login":  "redirect:/" + id_kategori.toString(); 
 
         
     }
@@ -85,14 +85,14 @@ public class TodoController {
         //     }
         //     responseData.setStatus(false);
         //     responseData.setPayload(null);
-        //     return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(responseData);
+        //     return !AuthController.is_login ? "redirect:/login":  ResponseEntity.status(HttpStatus.BAD_REQUEST).body(responseData);
         // }
         TodoData todoData = new TodoData();
         
         responseData.setStatus(true);
         todoService.removeBy(id);
         responseData.setPayload("berhasil");
-        return "redirect:/" + id_kategori.toString(); 
+        return !AuthController.is_login ? "redirect:/login":  "redirect:/" + id_kategori.toString(); 
 
 
     }
@@ -101,7 +101,7 @@ public class TodoController {
         model.addAttribute("id_kategori", id_kategori);
         model.addAttribute("new_todo", new TodoData());
         this.id_kategori = id_kategori;
-        return "/Kategori/Todo/tambahTodo";
+        return !AuthController.is_login ? "redirect:/login":  "/Kategori/Todo/tambahTodo";
     }
     @PostMapping("/add")
     public  String createTodoPost( TodoData new_Todo){
@@ -117,7 +117,7 @@ public class TodoController {
 
         
         
-        return "redirect:/" + this.id_kategori.toString();
+        return !AuthController.is_login ? "redirect:/login":  "redirect:/" + this.id_kategori.toString();
         
        
     }

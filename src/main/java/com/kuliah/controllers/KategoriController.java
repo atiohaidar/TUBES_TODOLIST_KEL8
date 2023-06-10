@@ -25,6 +25,7 @@ public class KategoriController {
     @Autowired
     KategoriService kategoriService;
     @GetMapping
+    
     public String showAllKategori(Model model){  
         
         ResponseData<Iterable<KategoriEntity>> responseData = new ResponseData<>();
@@ -43,7 +44,7 @@ public class KategoriController {
         responseData.setPayload(all_kategori); 
         model.addAttribute("all_kategori", all_kategori);
 
-return "Kategori/lihatKategori.html";
+return !AuthController.is_login ? "redirect:/login" :"Kategori/lihatKategori.html";
     }
 
     @GetMapping("/edit/{id}")
@@ -54,7 +55,7 @@ return "Kategori/lihatKategori.html";
         kategoriData.setNama(kategori.getNama());
         kategoriData.setId(kategori.getId());
         model.addAttribute("kategori", kategori);
-        return "Kategori/editKategori.html";
+        return !AuthController.is_login ? "redirect:/login": "Kategori/editKategori.html";
 
     }
     @PostMapping("/edit/{id}")
@@ -64,7 +65,7 @@ return "Kategori/lihatKategori.html";
         System.out.println("minta perhatian");
         kategoriService.save(kategoriEntity);
 
-        return "redirect:/";
+        return !AuthController.is_login ? "redirect:/login": "redirect:/";
 
         
         
@@ -73,7 +74,7 @@ return "Kategori/lihatKategori.html";
     public String deleteKategori(@PathVariable("id") Integer id, Model model){
         KategoriEntity kategori = kategoriService.findOne(id);
         model.addAttribute("kategori", kategori);
-        return "Kategori/hapusKategori.html";
+        return !AuthController.is_login ? "redirect:/login": "Kategori/hapusKategori.html";
     
     }
     @PostMapping("/delete/{id}")
@@ -83,12 +84,12 @@ return "Kategori/lihatKategori.html";
         
 
             
-        return "redirect:/";
+        return !AuthController.is_login ? "redirect:/login": "redirect:/";
     }
     @GetMapping("/add")
     public String createKategoriGet(Model model){
         model.addAttribute("new_kategori", new KategoriData());
-        return "Kategori/tambahKategori.html";
+        return !AuthController.is_login ? "redirect:/login": "Kategori/tambahKategori.html";
     }
     @PostMapping("/add")
     public String createKategoriPost(KategoriData kategoriData){
@@ -100,7 +101,7 @@ return "Kategori/lihatKategori.html";
         kategoriService.save(kategoriEntity);
         
         
-        return "redirect:/";
+        return !AuthController.is_login ? "redirect:/login": "redirect:/";
     }
 
 

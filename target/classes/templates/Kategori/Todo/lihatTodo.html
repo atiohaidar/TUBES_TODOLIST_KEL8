@@ -8,9 +8,12 @@
   
   </head>
   <body>
+  
     <div class="container">
-          
-    <h1>Aplikasi Todo List</h1>    
+      <nav class="navbar navbar-light bg-light">
+        <a class="navbar-brand" href="/">Aplikasi Todo List</a>
+        <a type="button"  href="/logout" class="btn btn-danger">LogOut</a>
+      </nav>
     <h3 th:text='${kategori.getNama()}'>Todo (variabel kategori)</h3>
     
       <!-- tambah akun -->
