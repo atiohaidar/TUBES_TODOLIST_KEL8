@@ -1,7 +1,7 @@
 package com.kuliah.dto;
 
 public class AuthData {
-    public String password;
+    private String password;
     public String getPassword() {
         return password;
     }

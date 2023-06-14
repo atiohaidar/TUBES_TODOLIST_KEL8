@@ -14,11 +14,11 @@ public class AuthController {
     public static boolean is_login;
     @PostMapping("/login")
     public String loginPost(AuthData authData){
-        if (authData.password.equals("password")){
+        if (authData.getPassword().equals("password")){
             this.is_login = true;
 
         }
-        System.out.println(authData.password);
+        System.out.println(authData.getPassword());
         return "redirect:/";
     }
     @GetMapping("/login")

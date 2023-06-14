@@ -23,7 +23,7 @@ import com.kuliah.services.KategoriService;
 @RequestMapping("")
 public class KategoriController {
     @Autowired
-    KategoriService kategoriService;
+    private KategoriService kategoriService;
     @GetMapping
     
     public String showAllKategori(Model model){  

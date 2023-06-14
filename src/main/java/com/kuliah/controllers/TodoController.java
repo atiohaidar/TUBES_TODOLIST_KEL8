@@ -26,13 +26,13 @@ import com.kuliah.services.TodoService;
 @Controller
 @RequestMapping("/{id_kategori}")
 public class TodoController {
-    public Integer id_kategori;
+    private Integer id_kategori;
     @Autowired
     
-    TodoService todoService;
+    private TodoService todoService;
     @Autowired
 
-    KategoriService kategoriService;
+    private KategoriService kategoriService;
     @GetMapping
     public String  showAllTodoByKategori(@PathVariable("id_kategori") Integer id_kategori, Model model){
         ResponseData<ArrayList<TodoData>> responseData = new ResponseData<>();
